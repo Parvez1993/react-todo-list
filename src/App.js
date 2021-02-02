@@ -63,7 +63,7 @@ export default class App extends Component {
 				<div className="container">
 					<div className="row">
 						<div className="col-10 mx-auto  col-md-8 mt-5">
-							<h3 className="uppercase text-center">Todo List</h3>
+							<h3 className="uppercase text-center">Todo Inputs</h3>
 							<TodoInput
 								item={this.state.item}
 								handleChange={this.handleChange}
