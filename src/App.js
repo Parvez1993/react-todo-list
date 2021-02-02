@@ -8,42 +8,65 @@ import TodoList from "./components/TodoList";
 
 export default class App extends Component {
 	state = {
-		items: [
-			{ id: 1, title: "Wake Up" },
-			{ id: 2, title: "Go to Work" },
-			{ id: 3, title: "Return Home" },
-			{ id: 4, title: "Sleep" },
-		],
+		items: [],
 		id: uuid(),
 		item: "",
 		editItem: false,
 	};
 
 	handleChange = (e) => {
-		console.log("handle change");
+		this.setState({
+			item: e.target.value,
+		});
 	};
 	handleSubmit = (e) => {
-		console.log("handle submit");
+		e.preventDefault();
+		const newItem = {
+			id: this.state.id,
+			title: this.state.item,
+		};
+		const updatedItem = [...this.state.items, newItem];
+		this.setState({
+			items: updatedItem,
+			id: uuid(),
+			item: "",
+			editItem: false,
+		});
 	};
 	clearList = () => {
-		console.log("clear list");
+		this.setState({
+			items: [],
+		});
 	};
 	handleDelete = (id) => {
-		console.log(`handle delete ${id}`);
+		const filteredItems = this.state.items.filter((item) => item.id !== id);
+		this.setState({
+			items: filteredItems,
+		});
 	};
 	handleEdit = (id) => {
-		console.log(`handle edit ${id}`);
+		const filteredItems = this.state.items.filter((item) => item.id !== id);
+		const selecteditems = this.state.items.find((item) => item.id === id);
+		console.log("filtered items", filteredItems);
+		console.log("selected items", selecteditems);
+		this.setState({
+			items: filteredItems,
+			item: selecteditems.title,
+			id: id,
+			editItem: true,
+		});
 	};
 	render() {
+		console.log(this.state);
 		return (
 			<div>
 				<div className="container">
-					<div class="row">
-						<div class="col-10 mx-auto  col-md-8 mt-5">
-							<h3 className="uppercase">Todo List</h3>
+					<div className="row">
+						<div className="col-10 mx-auto  col-md-8 mt-5">
+							<h3 className="uppercase text-center">Todo List</h3>
 							<TodoInput
 								item={this.state.item}
-								handleChange={this.state.handleChange}
+								handleChange={this.handleChange}
 								handleSubmit={this.handleSubmit}
 								editItem={this.state.editItem}
 							/>
